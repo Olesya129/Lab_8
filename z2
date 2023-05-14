@@ -1,0 +1,33 @@
+public class mas2 {
+    public static void main(String[] args) {
+        int[] array = {3, -8, 2, 5, 3, 1, -2, 8, 0, -4};
+        int otr = -1;
+        int nul = -1;
+        int sum = 0;
+        for (int i = 0; i < array.length; i++) {
+            if (array[i] < 0 && otr == -1) {
+                otr = i;
+            } else if (array[i] == 0 && nul == -1) {
+                nul = i; }
+            if (otr != -1 && nul != -1) {
+                break;
+            }
+        }
+        if (otr > nul) {
+            int in = otr;
+            otr = nul;
+            nul = in;
+        }
+        if (otr != -1 && nul != -1) {
+            System.out.println("Элементы между первым отрицательным и нулевым числом:");
+            for (int i = otr + 1; i < nul; i++) {
+                System.out.println(array[i]);
+                sum += array[i];
+            }
+        }
+        else {
+            System.out.println("Нет отрицательных и нулевых элементов в массиве");
+        }
+        System.out.println("Сумма элементов: " + sum);
+    }
+}
