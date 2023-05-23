@@ -1,0 +1,84 @@
+import java.util.Scanner;
+public class mas10 {
+    public static void main(String[] args) {
+        Scanner in = new Scanner(System.in);
+        System.out.println("Введите количество точек плоскости");
+        int N = in.nextInt();
+        double tochki[][];
+        tochki = new double[2][N];
+        for (int i = 0; i < 2; i++) {
+            for (int j = 0; j < N; j++) {
+                System.out.println("Введите элемент массива:");
+                double a = in.nextDouble();
+                tochki[i][j] = a;
+            }
+        }
+        int popadaniye[];
+        popadaniye = new int[N];
+        int shc = 0;
+        for (int i = 0; i <= N - 1; i++) {
+            oblast(shc, tochki, popadaniye);
+            shc = shc + 1;
+        }
+        int shc1 = 0;
+        for (int i = 0; i <= N - 1; i++) {
+            Vivod(shc1,tochki, popadaniye);
+            shc1=shc1+1;
+        }
+    }
+
+    public static void oblast(int shc,double mas1[][], int mas2[]) {
+        if (((mas1[1][shc] == (4/3f)*mas1[0][shc] + 9)&&(mas1[0][shc] >= -
+                9)&&(mas1[0][shc] <= 6)) || ((mas1[0][shc] == -6)&&(mas1[1][shc] <=
+                6)&&(mas1[1][shc] >= 1))|| ((mas1[1][shc] == (-6)*mas1[0][shc] -
+                30)&&(mas1[0][shc] >= -6)&&(mas1[0][shc] <= -5))|| ((mas1[1][shc] ==
+                (2/3f)*mas1[0][shc] + (10/3f))&&(mas1[0][shc] >= -5)&&(mas1[0][shc] <= -2))||
+                ((mas1[1][shc] == mas1[0][shc] + 4)&&(mas1[0][shc] >= -5)&&(mas1[0][shc] <= -
+                        2))|| ((mas1[1][shc] == (-5)*mas1[0][shc] - 26)&&(mas1[0][shc] >= -
+                5)&&(mas1[0][shc] <= -4))|| ((mas1[1][shc] == (-2)*mas1[0][shc] -
+                14)&&(mas1[0][shc] >= -6)&&(mas1[0][shc] <= -4))|| ((mas1[1][shc] ==
+                2*mas1[0][shc] + 10)&&(mas1[0][shc] >= -8)&&(mas1[0][shc] <= -6))||
+                ((mas1[1][shc] == (-3)*mas1[0][shc] - 30)&&(mas1[0][shc] >= -
+                        9)&&(mas1[0][shc] <= -8))|| ((mas1[1][shc] == 10*mas1[0][shc] +
+                14)&&(mas1[0][shc] >= -2)&&(mas1[0][shc] <= -1))|| ((mas1[1][shc] == (-
+                8)*mas1[0][shc] - 4)&&(mas1[0][shc] >= -1)&&(mas1[0][shc] <= 0))||
+                ((mas1[1][shc] == (10/3f)*mas1[0][shc] - 4)&&(mas1[0][shc] >=
+                        0)&&(mas1[0][shc] <= 3))|| ((mas1[1][shc] == 6*mas1[0][shc] -
+                12)&&(mas1[0][shc] >= 2)&&(mas1[0][shc] <= 3))|| ((mas1[1][shc] == (-
+                4/3f)*mas1[0][shc] + (8/3f))&&(mas1[0][shc] >= 2)&&(mas1[0][shc] <= 5))||
+                ((mas1[1][shc] == -4)&&(mas1[0][shc] >= 1)&&(mas1[0][shc] <= 5))||
+                ((mas1[1][shc] == (2/3f)*mas1[0][shc] - (14/3f))&&(mas1[0][shc] >= -
+                        2)&&(mas1[0][shc] <= 1))){
+            mas2[shc] = 0;
+        } else {
+            if (((mas1[1][shc] < (4/3f)*mas1[0][shc] + 9)&&(mas1[0][shc] < -
+                    6)&&(mas1[1][shc] > 2*mas1[0][shc] + 10)&&(mas1[1][shc] > (-3)*mas1[0][shc] -
+                    30)) || ((mas1[0][shc] > -6)&&(mas1[1][shc] < (-6)*mas1[0][shc] -
+                    30)&&(mas1[1][shc] < (2/3f)*mas1[0][shc] + (10/3f))&&(mas1[1][shc] >
+                    mas1[0][shc] + 4)&&(mas1[1][shc] < (-5)*mas1[0][shc] - 26)&&(mas1[1][shc] >
+                    (-2)*mas1[0][shc] - 14)) || ((mas1[1][shc] < 10*mas1[0][shc] +
+                    14)&&(mas1[1][shc] < (-8)*mas1[0][shc] - 4)&&(mas1[1][shc] < -
+                    4)&&(mas1[1][shc] > (2/3f)*mas1[0][shc] - (14/3f))) || ((mas1[1][shc] <
+                    (10/3f)*mas1[0][shc] - 4)&&(mas1[1][shc] > 6*mas1[0][shc] -12)&&(mas1[1][shc]
+                    < (-4/3f)*mas1[0][shc] + (8/3f))&&(mas1[1][shc] > -4))){
+                mas2[shc] = 1;
+            } else {
+                mas2[shc] = -1;
+            }
+        }
+    }
+    public static void Vivod (int shc, double mat1[][], int mat2[]) {
+        if (mat2[shc]==1){
+            System.out.println("Точка с координатами (" + mat1[0][shc] + ";"
+                    + mat1[1][shc] + ") принадлежит данной плоскости");
+        } else {
+            if (mat2[shc]==0) {
+                System.out.println("Точка с координатами (" + mat1[0][shc] +
+                        ";" + mat1[1][shc] + ") лежит на границе данной плоскости");
+            } else {
+                System.out.println("Точка с координатами (" + mat1[0][shc] +
+                        ";" + mat1[1][shc] + ") не принадлежит данной плоскости");
+            }
+        }
+    }
+}
