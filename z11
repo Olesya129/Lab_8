@@ -1,0 +1,97 @@
+import java.util.Scanner;
+public class mas11 {
+    public static void main(String[] args) {
+        Scanner sc = new Scanner(System.in);
+
+        System.out.print("Введите количество треугольников: ");
+        int N = sc.nextInt();
+        double[][] coords = new double[3][3 * N];
+        for (int i = 0; i < 3 * N; i++) {
+            System.out.print("Введите координату " + (i + 1) + ": ");
+            coords[i % 3][i / 3] = sc.nextDouble();
+        }
+
+        int[][] results = new int[3][N];
+        double[] areas = new double[N];
+
+        for (int i = 0; i < N; i++) {
+            double[][] coord = {{coords[0][i * 3], coords[1][i * 3]}, {coords[0][i * 3 + 1], coords[1][i * 3 + 1]}, {coords[0][i * 3 + 2], coords[1][i * 3 + 2]}};
+            double[] sides = {Math.sqrt(Math.pow(coord[1][0] - coord[0][0], 2) + Math.pow(coord[1][1] - coord[0][1], 2)),
+                    Math.sqrt(Math.pow(coord[2][0] - coord[1][0], 2) + Math.pow(coord[2][1] - coord[1][1], 2)),
+                    Math.sqrt(Math.pow(coord[0][0] - coord[2][0], 2) + Math.pow(coord[0][1] - coord[2][1], 2))};
+            if (isTriangleExists(coord)) {
+                results[0][i] = 1;  // Треугольник существует
+                results[1][i] = classifyTriangle(sides[0], sides[1], sides[2]);  // Классификация треугольника
+                areas[i] = calculateTriangleArea(sides[0], sides[1], sides[2]);  // Вычисление площади
+            } else {
+                results[0][i] = 0;  // Треугольник не существует
+            }
+        }
+        printTrianglesInfo(results, areas);
+    }
+
+    public static boolean isTriangleExists(double[][] coords) {
+        double[] a = coords[0], b = coords[1], c = coords[2];
+        return Math.abs((b[0] - a[0]) * (c[1] - a[1]) - (b[1] - a[1]) * (c[0] - a[0])) > 0;
+    }
+
+    public static int classifyTriangle(double a, double b, double c) {
+        if (Math.abs(a - b) < 0.1 && Math.abs(b - c) < 0.1) {
+            return 1;  // Равносторонний
+        } else if (Math.abs(Math.pow(a, 2) + Math.pow(b, 2) - Math.pow(c, 2)) < 0.1 ||
+                Math.abs(Math.pow(b, 2) + Math.pow(c, 2) - Math.pow(a, 2)) < 0.1 ||
+                Math.abs(Math.pow(c, 2) + Math.pow(a, 2) - Math.pow(b, 2)) < 0.1) {
+            return 2;  // Прямоугольный
+        } else if (Math.abs(a - b) < 0.1 || Math.abs(b - c) < 0.1 || Math.abs(a - c) < 0.1) {
+            return 3;  // Равнобедренный
+        } else {
+            return 4;  // Произвольный
+        }
+    }
+
+    public static double calculateTriangleArea(double a, double b, double c) {
+        double p = (a + b + c) / 2;
+        return Math.sqrt(p * (p - a) * (p - b) * (p - c));
+    }
+
+    public static void printTrianglesInfo(int[][] results, double[] areas) {
+        for (int i = 0; i < results[0].length; i++) {
+            if (results[0][i] == 1) {
+                System.out.println("Треугольник " + (i + 1) + ": существует");
+            } else {
+                System.out.println("Треугольник " + (i + 1) + ": не существует");
+            }
+        }
+        for (int i = 0; i < results[1].length; i++) {
+            if (results[1][i] == 0) {
+                System.out.println("Треугольник " + (i + 1) + ": не существует");
+            } else if (results[1][i] == 1) {
+                System.out.println("Треугольник " + (i + 1) + ": равносторонний");
+            } else if (results[1][i] == 2) {
+                System.out.println("Треугольник " + (i + 1) + ": прямоугольный");
+            } else if (results[1][i] == 3) {
+                System.out.println("Треугольник " + (i + 1) + ": равнобедренный");
+            } else {
+                System.out.println("Треугольник " + (i + 1) + ": произвольный");
+            }
+        }
+
+        for (int i = 0; i < areas.length; i++) {
+            if (areas[i] != 0) {
+                System.out.println("Треугольник " + (i + 1) + ": площадь = " + areas[i]);
+            }
+        }
+
+        String equalAreas = "";
+        for (int i = 0; i < areas.length; i++) {
+            for (int j = i + 1; j < areas.length; j++) {
+                if (Math.abs(areas[i] - areas[j]) < 0.1) {
+                    equalAreas += (i + 1) + " и " + (j + 1) + ", ";
+                }
+            }
+        }
+        if (equalAreas.length() > 0) {
+            System.out.println("Треугольники с равными площадями: " + equalAreas.substring(0, equalAreas.length() - 2));
+        }
+    }
+}
