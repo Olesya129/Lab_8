@@ -1,0 +1,55 @@
+public class mas6 {
+
+    public static void main(String[] args) {
+        int[][] mas = {
+                {1, 2, 3, 4},
+                {5, 6, 7, 8},
+                {9, 10, 11, 12},};
+
+        for (int i = 0; i < mas.length; i++) {
+            for (int j = 0; j < mas[0].length; j++) {
+                int value = mas[i][j];
+                boolean isSaddlePoint = true;
+
+        // Проверка, является ли значение наименьшим в строке
+                for (int k = 0; k < mas[0].length; k++) {
+                    if (mas[i][k] < value) {
+                        isSaddlePoint = false;
+                        break;
+                    }
+                }
+         // проверяем, является ли оно наибольшим в столбце
+                if (isSaddlePoint) {
+                    for (int k = 0; k < mas.length; k++) {
+                        if (mas[k][j] > value) {
+                            isSaddlePoint = false;
+                            break;
+                        }
+                    }
+                }
+          // проверяем, является ли оно наибольшим в строке
+                if (!isSaddlePoint) {
+                    isSaddlePoint = true;
+                    for (int k = 0; k < mas[0].length; k++) {
+                        if (mas[i][k] > value) {
+                            isSaddlePoint = false;
+                            break;
+                        }
+                    }
+          // проверяем, является ли оно наименьшим в столбце
+                    if (isSaddlePoint) {
+                        for (int k = 0; k < mas.length; k++) {
+                            if (mas[k][j] < value) {
+                                isSaddlePoint = false;
+                                break;
+                            }
+                        }
+                    }
+                }
+                if (isSaddlePoint) {
+                    System.out.printf("(%d,%d) ", i, j);
+                }
+            }
+        }
+    }
+}
